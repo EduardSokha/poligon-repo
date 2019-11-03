@@ -9,6 +9,12 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <error-page>
+  <exception-type>java.lang.Throwable</exception-type>
+  <location>/WEB-INF/jsp/error_page.jsp</location>
+  </error-page>
+  
   <servlet>
     <description></description>
     <display-name>Controller</display-name>
