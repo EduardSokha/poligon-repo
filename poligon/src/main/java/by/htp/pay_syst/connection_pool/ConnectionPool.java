@@ -1,84 +1,78 @@
 package by.htp.pay_syst.connection_pool;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.sql.Statement;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 
 public class ConnectionPool {
-	
-	private String driver;
-	private String url;
-	private String user;
-	private String password;
-	private int size;
-	
+
 	private static final ConnectionPool instance = new ConnectionPool();
-	private BlockingQueue<Connection> connections = new ArrayBlockingQueue<Connection>(5);
+
+	private BasicDataSource dataSource;
+	
+	final static Logger logger = Logger.getLogger(ConnectionPool.class);
 
 	public ConnectionPool() {
 		DBResourceManager db = DBResourceManager.getInstance();
-		driver = db.getValue(DBParameters.DB_DRIVER); 
-		url = db.getValue(DBParameters.DB_URL);
-		user = db.getValue(DBParameters.DB_USER);
-		password = db.getValue(DBParameters.DB_PASSWORD);
-		size = Integer.parseInt(db.getValue(DBParameters.DB_SIZE));
-		
-		
-		try {
-			
-			
 
-			Class.forName(driver);
-			for (int i = 0; i < size; i++) {
-				Connection coni = DriverManager.getConnection(url, user, password);
-				
-				connections.add(coni);
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-//			System.err.println();
-//			System.out.println("dssdf");
-		}
+		dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(db.getValue(DBParameters.DB_DRIVER));
+		dataSource.setUsername(db.getValue(DBParameters.DB_USER));
+		dataSource.setPassword(db.getValue(DBParameters.DB_PASSWORD));
+		dataSource.setUrl(db.getValue(DBParameters.DB_URL));
 	}
 
-	public Connection take() throws InterruptedException {
-
-		return connections.take();
+	public Connection getConnection() throws SQLException {
+		return dataSource.getConnection();
 	}
 
-	public void release(Connection con) {
-
+	public void releaseDbResourses(Connection con, Statement statement) {
+		releaseStatement(statement);
+		releaseConnection(con);
+	}
+	
+	public void releaseDbResourses(Connection con, Statement statement, ResultSet resultSet) {
+		releaseResultSet(resultSet);
+		releaseStatement(statement);
+		releaseConnection(con);
+	}
+	
+	public void releaseConnection(Connection con) {
 		try {
 			if (con != null) {
 				con.setAutoCommit(true);
-				connections.add(con);
-			} else {
-				// log
+				con.close();
 			}
 		} catch (SQLException e) {
-			System.err.println();
+			logger.error("Cannot close connection", e);
 		}
-
+	}
+	
+	public void releaseStatement(Statement statement) {
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				logger.error("Cannot cloe Statement", e);
+			}
+		}
+	}
+	
+	public void releaseResultSet(ResultSet resultSet) {
+		if (resultSet != null) {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				logger.error("cannot close ResultSet", e);
+			}
+		}
 	}
 
 	public static ConnectionPool getInstance() {
 		return instance;
 	}
-
 }
-
-//public Connection take() throws DAOException {
-//
-//	Connection con = null;
-//	try {
-//		con = connections.take();
-//	} catch (InterruptedException e) {
-//		throw new DAOException("");
-//	}
-//	
-//	return con;
-//} старый тэйк до исправления

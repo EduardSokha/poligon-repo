@@ -40,7 +40,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET role_idrole = " + role + " WHERE idusers = " + idUser;
 			ps = con.prepareStatement(sq2);
@@ -50,20 +50,8 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
-			
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		
 		
@@ -82,7 +70,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			con.setAutoCommit(false);
 			
 			String sq2 = "UPDATE payment_system.account SET status = \"locked\" WHERE idaccount = " + idAccount;
@@ -106,25 +94,13 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 			}
 			throw new DAOException(e);
 			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-					ps1.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseStatement(ps1);
+			cp.releaseStatement(ps);
+			cp.releaseConnection(con);
 		}
-		
+
 		return true;
-		
-		
 	}
 //���� � �������� � �� ��������
 	@Override
@@ -136,20 +112,14 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		String resp;
 		
 		try {
-			
-			con = cp.take();
+			con = cp.getConnection();
 			con.setAutoCommit(false);
-			
 			
 			String sq1 = "DELETE FROM users WHERE idusers = " + user.getId();
 			ps = con.prepareStatement(sq1);
 			
 			ps.executeUpdate();
-			
-			
-			
 			con.commit();
-		
 		} catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			try {
@@ -160,25 +130,11 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 			}
 			throw new DAOException(e);
 			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);;
 		}
-		
 		resp = "delete ";
 		return resp;
-		
-		
 	}
 
 	@Override
@@ -191,7 +147,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			con.setAutoCommit(false);
 			
 			String sq2 = "UPDATE payment_system.account SET status = \"unlocked\" WHERE idaccount = " + idAccount;
@@ -214,25 +170,14 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 				throw new RuntimeException(e);
 			}
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-					ps1.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+		} finally {			
+			cp.releaseStatement(ps);
+			cp.releaseDbResourses(con, ps1);
 		}
+			
 		
 		
-		return true;
-		
+		return true;		
 	}
 //���� � �������� � �� ��������
 	@Override
@@ -245,7 +190,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		String resp;
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			con.setAutoCommit(false);
 			st = con.createStatement();
 			
@@ -272,19 +217,10 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 				throw new RuntimeException(e1);
 			}
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 		return resp;
 		
@@ -304,7 +240,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET series_number_passport = '" + newSeriesNumbPassport + "' WHERE idusers = " + idUser;
 			ps = con.prepareStatement(sq2);
@@ -314,22 +250,10 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {	
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
-		
 		
 		return resp;
 	}
@@ -343,39 +267,22 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		String resp = "try again";
 		
 		try {
-			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET identification_number_passport = '" + newIdentificNumbPassport + "' WHERE idusers = " + idUser;
 //			System.out.println(sq2);
 			ps = con.prepareStatement(sq2);
 			ps.executeUpdate();
-						
-		
+			
 		} catch (SQLException e) {	
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+		} finally {			
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
 		
-		
-		
 		return resp;
-		
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
@@ -388,12 +295,9 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		Statement st = null;
 		
 		List<Account> accounts = new ArrayList<Account>();
-		
-
-		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT payment_system.account.idaccount, payment_system.account.balance, payment_system.account.creation_date, payment_system.account.status, payment_system.currency.name_currency FROM payment_system.account INNER JOIN payment_system.currency ON payment_system.account.currency_idcurrency = payment_system.currency.idcurrency";
@@ -419,30 +323,16 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 				accounts.add(account);
 				
 			}
-			
-	
-
 		}catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 
 		return accounts;
-		
-		
 	}
 //��������� �������� � main, ���� � �������� � �� �������� 
 	@Override
@@ -460,7 +350,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT payment_system.card.idcard, payment_system.card.creation_date, payment_system.card.status, payment_system.card.account_idaccount, payment_system.payment_system_card.type_paym_syst_card, payment_system.name_card.name_card FROM payment_system.card INNER JOIN payment_system.payment_system_card ON payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card INNER JOIN payment_system.name_card ON payment_system.card.name_card_idname_card = payment_system.name_card.idname_card";
@@ -492,23 +382,13 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		}catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 
 		return cards;
-		
 	}
 //��������� �������� � main, ���� � �������� � �� �������� 
 	@Override
@@ -525,7 +405,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT payment_system.users.idusers, payment_system.users.login, payment_system.users.password, payment_system.users.name, payment_system.users.surname, payment_system.users.address, payment_system.role.title, payment_system.users.series_number_passport, payment_system.users.identification_number_passport, payment_system.users.codeword, payment_system.users.phone_number, payment_system.users.residence_registr_data_passport FROM payment_system.users INNER JOIN payment_system.role ON payment_system.users.role_idrole = payment_system.role.idrole";
@@ -562,24 +442,13 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		}catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 
 		return users;
-		
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
@@ -591,7 +460,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq1 = "INSERT INTO name_card(name_card) VALUES(?)";
 			ps = con.prepareStatement(sq1);
@@ -603,23 +472,10 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {	
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
-		
-		
 		
 		return resp;
 	}
@@ -633,7 +489,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq1 = "DELETE FROM payment_system.name_card WHERE idname_card = " + idNameCard;
 			ps = con.prepareStatement(sq1);
@@ -643,26 +499,11 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {		
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
-		
-		
-		
 		return resp;
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
@@ -679,7 +520,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT * FROM payment_system.name_card";
@@ -708,19 +549,10 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		}catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 
 		return namesCards;
@@ -765,7 +597,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		Date date = new Date();
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			con.setAutoCommit(false);
 			st = con.createStatement();
@@ -807,20 +639,11 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 				throw new RuntimeException(e);
 			}
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-					ps2.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseStatement(ps2);
+			cp.releaseDbResourses(con, ps);
 		}
 		return resp;
 		
@@ -834,7 +657,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			con.setAutoCommit(false);
 			String sq1 = "INSERT INTO users(login, password, name, surname, address, role_idrole, series_number_passport, identification_number_passport, codeword, phone_number, residence_registr_data_passport) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 //			String sq1 = "INSERT INTO users(login, password, name, surname, address, role_idrole) VALUES(?,?,?,?,?,?)";
@@ -864,19 +687,8 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 				throw new RuntimeException(e1);
 			}
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		return true;
 		
@@ -893,7 +705,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		User user = new User();
 		
 		try {
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT * FROM payment_system.users WHERE login = '" + login + "' and  password = '" + password + "'";
@@ -926,25 +738,13 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		}catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 		
-		
-		
 		return user;
-		
 	}
 //���� � �������� � �� ��������
 	@Override
@@ -961,7 +761,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();			
 			con.setAutoCommit(false);
 						
@@ -977,7 +777,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 			rs.next();
 			int accountNumber = rs.getInt(1);
 //			System.out.println("accountNumber=" + accountNumber + " " + rs.getInt(2) + " " + rs.getString(3) + " " + rs.getString(4));
-			
+			cp.releaseResultSet(rs);
 		
 			String sq2 = "INSERT INTO card(creation_date, status, account_idaccount, payment_system_card_idpayment_system_card, name_card_idname_card) VALUES(?,?,?,?,?)";
 			ps2 = con.prepareStatement(sq2);
@@ -991,15 +791,6 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 			rs = st.executeQuery("SELECT * FROM card WHERE idcard = LAST_INSERT_ID()");
 			rs.next();
 			int idCard = rs.getInt(1);
-//			System.out.println("idCard=" + idCard + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
-			
-			
-			
-//			String sq3 = "SELECT idusers FROM payment_system.users WHERE login = '" + param.getLogin() + "' and  password = '" + param.getPassword() + "'";			
-//			rs = st.executeQuery(sq3);
-//			rs.next();
-//			int idUser = rs.getInt(1);
-////			System.out.println("iduser = " + idUser);
 			
 			
 			String sq4 = "INSERT INTO users_account(users_idusers, account_idaccount) VALUES(?,?)";
@@ -1021,32 +812,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 				throw new RuntimeException(e1);
 			}
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-					ps2.close();
-					ps3.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(ps2);
+			cp.releaseStatement(ps3);
+			cp.releaseDbResourses(con, ps);
 		}
-		
-		
-		
-//		String sq1 = "INSERT INTO card(creation_date, status, account_idaccount) VALUES(?,?,?)";
-//		PreparedStatement ps = con.prepareStatement(sq1);
-//		
-//		ps.setString(1, "8.04.2019");
-//		ps.setString(2, "unlocked");
-//		ps.setInt(3, 11);
-//		ps.executeUpdate();
 		
 		return resp;
 	}
@@ -1059,7 +830,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		String resp = null;
 		
 		try {			
-			con = cp.take();
+			con = cp.getConnection();
 //			con.setAutoCommit(false);
 			
 			String sq2 = "UPDATE payment_system.users SET login = '" + user.getLogin() + "', name = '" + user.getName() + "', surname = '" + user.getSurname() + "', address = '" + user.getAddress() + "', role_idrole = " + user.getRole() + " WHERE idusers = " + user.getId();
@@ -1071,25 +842,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		
 		resp = "your data successfully saved";
 		return resp;
-		
-		
 	}
 
 	@Override
@@ -1103,7 +861,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT payment_system.account.idaccount, payment_system.account.balance, payment_system.account.status, payment_system.account.creation_date, payment_system.currency.name_currency, payment_system.card.idcard, payment_system.payment_system_card.type_paym_syst_card, payment_system.name_card.name_card FROM payment_system.users_account INNER JOIN payment_system.account ON payment_system.users_account.account_idaccount = payment_system.account.idaccount INNER JOIN payment_system.currency ON payment_system.account.currency_idcurrency = payment_system.currency.idcurrency INNER JOIN payment_system.card ON  payment_system.account.idaccount = payment_system.card.account_idaccount INNER JOIN payment_system.payment_system_card ON payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card INNER JOIN payment_system.name_card ON  payment_system.card.name_card_idname_card = payment_system.name_card.idname_card WHERE payment_system.users_account.users_idusers = " + idUser;
@@ -1138,19 +896,10 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		}catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 
 		return accaunts;
@@ -1171,7 +920,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET login = '" + login + "' WHERE idusers = " + idUser;
 //			System.out.println(sq2);
@@ -1182,25 +931,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {	
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+		}  finally {
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
 		
-		
 		return resp;
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
@@ -1215,7 +951,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT payment_system.users.password FROM payment_system.users WHERE idusers = " + idUser;			
@@ -1239,25 +975,13 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {	
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
 		
-		
-		
 		return resp;
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
@@ -1270,7 +994,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET name = '" + name + "' WHERE idusers = " + idUser;
 //			System.out.println(sq2);
@@ -1281,25 +1005,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {			
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
 		
-		
 		return resp;
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
@@ -1313,7 +1024,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET surname = '" + surname + "' WHERE idusers = " + idUser;
 //			System.out.println(sq2);
@@ -1324,26 +1035,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {		
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
 		
-		
 		return resp;
-		
-		
 	}
 //��������� �������� � main, ���� � �������� � �� �������� 
 	@Override
@@ -1356,7 +1053,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET address = '" + address + "' WHERE idusers = " + idUser;
 //			System.out.println(sq2);
@@ -1367,30 +1064,15 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {		
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
-		
-		
 		return resp;
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
 	public String correctionCodeWord(String codeword, int idUser) throws DAOException {
-		
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -1399,7 +1081,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET codeword = '" + codeword + "' WHERE idusers = " + idUser;
 			ps = con.prepareStatement(sq2);
@@ -1409,26 +1091,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
 		
-		
 		return resp;
-		
-		
 	}
 //��������� �������� � main, ���� � �������� � �� �������� 
 	@Override
@@ -1441,7 +1109,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET phone_number = '" + phoneNumber + "' WHERE idusers = " + idUser;
 			ps = con.prepareStatement(sq2);
@@ -1451,26 +1119,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {	
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
 		
-		
 		return resp;
-		
-		
 	}
 //��������� �������� � main, ���� � �������� � �� �������� 
 	@Override
@@ -1484,7 +1138,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			
 			String sq2 = "UPDATE payment_system.users SET residence_registr_data_passport = '" + residenceRegistr + "' WHERE idusers = " + idUser;
 			ps = con.prepareStatement(sq2);
@@ -1494,26 +1148,12 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		} catch (SQLException e) {		
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+			cp.releaseDbResourses(con, ps);
 		}
 		resp = "successful";
 		
-		
 		return resp;
-		
-		
 	}
 //��������� �������� � main, ���� � �������� � �� ��������
 	@Override
@@ -1529,7 +1169,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			st = con.createStatement();
 			
 			String sq1 = "SELECT password FROM payment_system.users WHERE identification_number_passport = '" + identificNumberPassport + "' AND codeword = '" + codeWord + "' AND series_number_passport = '" + seriesNumberPassport + "'";
@@ -1549,25 +1189,15 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		}catch (SQLException e) {
 			logger.debug("SQLException DAO" + e);
 			throw new DAOException(e);
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseDbResourses(con, ps);
 		}
-		
-		
 		resp = "your password = " + password;
-		return resp;
 		
+		return resp;
 	}
 //��������� �������� � main, ���� � �������� � �� �������� 
 	@Override
@@ -1584,7 +1214,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 		
 		try {
 			
-			con = cp.take();
+			con = cp.getConnection();
 			con.setAutoCommit(false);
 			st = con.createStatement();
 			
@@ -1595,7 +1225,7 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 			int balanceCardFrom = rs.getInt(1);
 			int idaccountCardFrom = rs.getInt(2);
 			int newBalanceCardFrom = balanceCardFrom - amount;	
-			
+			cp.releaseResultSet(rs);
 			
 			String sq2 = "SELECT payment_system.account.balance, payment_system.account.idaccount FROM payment_system.card INNER JOIN payment_system.account ON payment_system.card.account_idaccount = payment_system.account.idaccount WHERE idcard = " + idCardTo;			
 			rs = st.executeQuery(sq2);
@@ -1612,33 +1242,6 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 			ps2 = con.prepareStatement(sq4);
 			ps2.executeUpdate();
 			
-
-			
-//			String sq1 = "SELECT payment_system.account.balance FROM payment_system.users INNER JOIN payment_system.users_account ON payment_system.users.idusers = payment_system.users_account.users_idusers INNER JOIN payment_system.account ON payment_system.users_account.account_idaccount = payment_system.account.idaccount WHERE payment_system.account.idaccount = " + paym.getIdAccount() + " and payment_system.users.idusers = " + paym.getIdUser();
-//			rs = st.executeQuery(sq1);
-//			rs.next();
-//			int balance = rs.getInt(1);
-//			int newBalance = balance - paym.getPaymentAmount();	
-//			String price = "" + paym.getPaymentAmount();
-//			
-//			
-//			
-//			String sq2 = "UPDATE payment_system.account SET balance = " + newBalance + " WHERE idaccount = " + paym.getIdAccount();
-//			ps = con.prepareStatement(sq2);
-//			ps.executeUpdate();
-//			
-//			String sq3 = "INSERT INTO payments(status, date, price, sender, users_idusers, recipient) VALUES(?,?,?,?,?,?)";
-//			ps2 = con.prepareStatement(sq3);
-//			
-//			ps2.setString(1, "approved");
-//			ps2.setString(2, date.toString());
-//			ps2.setString(3, price);
-//			ps2.setString(4, paym.getSender());
-//			ps2.setInt(5, paym.getIdUser());
-//			ps2.setInt(6, paym.getIdAccountRecipient());
-//			ps2.executeUpdate();
-			
-			
 			con.commit();
 		
 		} catch (SQLException e) {
@@ -1650,477 +1253,16 @@ public class MySQLDAO implements UserDAO, AdminDAO {
 				throw new RuntimeException(e1);
 			}
 			throw new DAOException(e);			
-		} catch (InterruptedException e) {
-			logger.debug("InterruptedException DAO" + e);
-			throw new DAOException(e);
 		} finally {
-			if (ps != null & ps2 != null) {
-				try {
-					ps.close();
-					ps2.close();
-				} catch (SQLException e) {
-					logger.warn("prepareStatement = null" + e);
-				}
-			}
-			
-			cp.release(con);
+
+			cp.releaseResultSet(rs);
+			cp.releaseStatement(st);
+			cp.releaseStatement(ps2);
+			cp.releaseDbResourses(con, ps);
 		}
 		
 		resp = "successful";
 		
 		return resp;
-		
-		
 	}
-//��������� �������� � main, ���� � �������� � �� ��������  	
-	
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Connection con = null;
-//ResultSet rs = null;
-//PreparedStatement ps = null;
-//
-//try {
-//	
-//	con = cp.take();
-//			
-//	String sq1 = "INSERT INTO users(login, password, name, surname, address, role_idrole) VALUES(?,?,?,?,?,?)";
-//	ps = con.prepareStatement(sq1);
-//	
-//	ps.setString(1, log);
-//	ps.setString(2, passw);
-//	ps.setString(3, name);
-//	ps.setString(4, surname);
-//	ps.setString(5, address);
-//	ps.setInt(6, role);
-//	ps.executeUpdate();
-//
-//} catch (SQLException e) {
-//	throw new DAOException("");
-//} catch (InterruptedException e) {
-//	throw new DAOException("");
-//} finally {
-//	if (ps != null) {
-//		try {
-//			ps.close();
-//		} catch (SQLException e) {
-//			// log
-//			System.err.println();
-//		}
-//	}
-//	
-//	cp.release(con);
-//}
-//return null;
-//
-//
-
-
-
-//Connection con = null;
-//ResultSet rs = null;
-//PreparedStatement ps = null;
-//
-//try {
-//	
-//	con = cp.take();
-//	String sq1 = "INSERT INTO users(name, surrname) VALUES(?,?)";
-//	ps = con.prepareStatement(sq1);
-//
-//} catch (SQLException e) {
-//	throw new DAOException("");
-//} catch (InterruptedException e) {
-//	throw new DAOException("");
-//} finally {
-//	if (ps != null) {
-//		try {
-//			ps.close();
-//		} catch (SQLException e) {
-//			// log
-//			System.err.println();
-//		}
-//	}
-//	
-//	cp.release(con);
-//}
-//return null;
-//
-
-
-
-
-
-
-// ������ ��� ������ ������
-//SELECT
-//users.idusers, users_account.idusers_account,
-//users_account.users_idusers, 
-//users_account.account_idaccount
-//FROM users
-//INNER JOIN users_account ON users.idusers=users_account.users_idusers;
-//
-//SELECT
-//users.idusers, users_account.idusers_account,
-//users_account.users_idusers, 
-//users_account.account_idaccount
-//FROM users
-//INNER JOIN users_account ON users.idusers=users_account.idusers_account;
-//
-//SELECT
-//payment_system.users.idusers, 
-//payment_system.users_account.idusers_account,
-//payment_system.users_account.users_idusers, 
-//payment_system.users_account.account_idaccount
-//FROM payment_system.users
-//INNER JOIN payment_system.users_account ON 
-//payment_system.users.idusers = payment_system.users_account.users_idusers;
-//
-//
-//
-//SELECT
-//payment_system.users.idusers, 
-//payment_system.users_account.idusers_account,
-//payment_system.users_account.users_idusers, 
-//payment_system.users_account.account_idaccount,
-//payment_system.account.idaccount,
-//payment_system.account.balance
-//FROM payment_system.users
-//INNER JOIN payment_system.users_account ON 
-//payment_system.users.idusers = payment_system.users_account.users_idusers
-//INNER JOIN payment_system.account ON 
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount;
-//
-//
-//SELECT
-//payment_system.users.idusers, 
-//payment_system.users_account.idusers_account,
-//payment_system.users_account.users_idusers, 
-//payment_system.users_account.account_idaccount,
-//payment_system.account.idaccount,
-//payment_system.account.balance
-//FROM payment_system.users
-//INNER JOIN payment_system.users_account ON 
-//payment_system.users.idusers = payment_system.users_account.users_idusers
-//INNER JOIN payment_system.account ON 
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//WHERE payment_system.account.idaccount = 6;
-//
-//
-//SELECT
-//payment_system.account.balance
-//FROM payment_system.users
-//INNER JOIN payment_system.users_account ON 
-//payment_system.users.idusers = payment_system.users_account.users_idusers
-//INNER JOIN payment_system.account ON 
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//WHERE payment_system.account.idaccount = 6;
-
-
-//SELECT
-//payment_system.users.idusers, 
-//payment_system.users_account.idusers_account,
-//payment_system.users_account.users_idusers, 
-//payment_system.users_account.account_idaccount,
-//payment_system.account.idaccount,
-//payment_system.account.balance
-//FROM payment_system.users
-//INNER JOIN payment_system.users_account ON 
-//payment_system.users.idusers = payment_system.users_account.users_idusers
-//INNER JOIN payment_system.account ON 
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//WHERE payment_system.account.idaccount > 6 and payment_system.users.idusers > 3;
-
-
-//SELECT
-//payment_system.users.idusers, 
-//payment_system.users_account.idusers_account,
-//payment_system.users_account.users_idusers, 
-//payment_system.users_account.account_idaccount,
-//payment_system.account.idaccount,
-//payment_system.account.balance
-//FROM payment_system.users
-//INNER JOIN payment_system.users_account ON 
-//payment_system.users.idusers = payment_system.users_account.users_idusers
-//INNER JOIN payment_system.account ON 
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//WHERE payment_system.account.idaccount = 6 and payment_system.users.idusers = 3;
-
-
-
-
-//SELECT payment_system.card.account_idaccount, 
-//payment_system.account.balance FROM payment_system.card
-//INNER JOIN payment_system.account ON 
-//payment_system.card.account_idaccount = payment_system.account.idaccount WHERE idcard=3;
-
-
-
-//SELECT payment_system.card.account_idaccount, payment_system.card.idcard,
-//payment_system.account.balance FROM payment_system.card
-//INNER JOIN payment_system.account ON 
-//payment_system.card.account_idaccount = payment_system.account.idaccount WHERE idcard=6;
-
-
-
-//SELECT 
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.card.account_idaccount,
-//payment_system.card.idcard,
-//payment_system.card.status
-//FROM payment_system.account
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//WHERE payment_system.account.idaccount = 6;
-
-
-
-
-//SELECT payment_system.account.balance FROM payment_system.users INNER JOIN payment_system.users_account ON payment_system.users.idusers = payment_system.users_account.users_idusers INNER JOIN payment_system.account ON payment_system.users_account.account_idaccount = payment_system.account.idaccount WHERE payment_system.account.idaccount = 6;
-
-
-//SELECT payment_system.account.balance FROM payment_system.users INNER JOIN payment_system.users_account ON payment_system.users.idusers = payment_system.users_account.users_idusers INNER JOIN payment_system.account ON payment_system.users_account.account_idaccount = payment_system.account.idaccount WHERE payment_system.account.idaccount = 6 and payment_system.users.idusers = 3;
-
-
-//SELECT payment_system.account.balance, payment_system.account.idaccount FROM payment_system.card INNER JOIN payment_system.account ON payment_system.card.account_idaccount = payment_system.account.idaccount WHERE idcard=6;
-
-
-//UPDATE payment_system.account SET status = "locked" WHERE idaccount = 6;
-
-
-
-
-//SELECT 
-//payment_system.users_account.idusers_account,
-//payment_system.users_account.users_idusers,
-//payment_system.users_account.account_idaccount,
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.account.creation_date,
-//payment_system.card.account_idaccount,
-//payment_system.card.idcard,
-//payment_system.card.status,
-//payment_system.card.creation_date
-//FROM payment_system.users_account
-//INNER JOIN payment_system.account ON
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//WHERE payment_system.users_account.users_idusers = 6;
-
-//SELECT 
-//payment_system.users_account.users_idusers,
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.account.creation_date,
-//payment_system.card.idcard,
-//payment_system.card.status,
-//payment_system.card.creation_date
-//FROM payment_system.users_account
-//INNER JOIN payment_system.account ON
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//WHERE payment_system.users_account.users_idusers = 6;
-
-//SELECT 
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.account.creation_date,
-//payment_system.card.idcard,
-//payment_system.card.status,
-//payment_system.card.creation_date
-//FROM payment_system.users_account
-//INNER JOIN payment_system.account ON
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//WHERE payment_system.users_account.users_idusers = 6;
-
-
-
-
-//SELECT 
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.account.creation_date,
-//payment_system.account.currency_idcurrency,
-//payment_system.currency.name_currency,
-//payment_system.card.idcard,
-//payment_system.card.status,
-//payment_system.card.creation_date,
-//payment_system.card.payment_system_card_idpayment_system_card,
-//payment_system.payment_system_card.type_paym_syst_card,
-//payment_system.card.name_card_idname_card,
-//payment_system.name_card.name_card
-//FROM payment_system.users_account
-//INNER JOIN payment_system.account ON
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//INNER JOIN payment_system.currency ON 
-//payment_system.account.currency_idcurrency = payment_system.currency.idcurrency
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//INNER JOIN payment_system.payment_system_card ON 
-//payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card
-//INNER JOIN payment_system.name_card ON 
-//payment_system.card.name_card_idname_card = payment_system.name_card.idname_card
-//WHERE payment_system.users_account.users_idusers = 2;
-
-
-
-
-
-//SELECT 
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.account.creation_date,
-//payment_system.currency.name_currency,
-//payment_system.card.idcard,
-//payment_system.card.status,
-//payment_system.card.creation_date,
-//payment_system.payment_system_card.type_paym_syst_card,
-//payment_system.name_card.name_card
-//FROM payment_system.users_account
-//INNER JOIN payment_system.account ON
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//INNER JOIN payment_system.currency ON 
-//payment_system.account.currency_idcurrency = payment_system.currency.idcurrency
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//INNER JOIN payment_system.payment_system_card ON 
-//payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card
-//INNER JOIN payment_system.name_card ON 
-//payment_system.card.name_card_idname_card = payment_system.name_card.idname_card
-//WHERE payment_system.users_account.users_idusers = 2;
-
-
-
-//SELECT 
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.account.creation_date,
-//payment_system.currency.name_currency,
-//payment_system.card.idcard,
-//payment_system.payment_system_card.type_paym_syst_card,
-//payment_system.name_card.name_card
-//FROM payment_system.users_account
-//INNER JOIN payment_system.account ON
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//INNER JOIN payment_system.currency ON 
-//payment_system.account.currency_idcurrency = payment_system.currency.idcurrency
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//INNER JOIN payment_system.payment_system_card ON 
-//payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card
-//INNER JOIN payment_system.name_card ON 
-//payment_system.card.name_card_idname_card = payment_system.name_card.idname_card
-//WHERE payment_system.users_account.users_idusers = 2;
-
-
-
-
-//SELECT 
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.account.creation_date,
-//payment_system.currency.name_currency,
-//payment_system.card.idcard,
-//payment_system.payment_system_card.type_paym_syst_card,
-//payment_system.name_card.name_card
-//FROM payment_system.users_account
-//INNER JOIN payment_system.account ON
-//payment_system.users_account.account_idaccount = payment_system.account.idaccount
-//INNER JOIN payment_system.currency ON 
-//payment_system.account.currency_idcurrency = payment_system.currency.idcurrency
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//INNER JOIN payment_system.payment_system_card ON 
-//payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card
-//INNER JOIN payment_system.name_card ON 
-//payment_system.card.name_card_idname_card = payment_system.name_card.idname_card
-//WHERE payment_system.users_account.users_idusers = 2;
-
-
-//SELECT payment_system.users.idusers, payment_system.users.login, payment_system.users.password, payment_system.users.name,
-//payment_system.users.surname, payment_system.users.address, payment_system.role.title, payment_system.users.series_number_passport,
-//payment_system.users.identification_number_passport, payment_system.users.codeword, payment_system.users.phone_number,
-//payment_system.users.residence_registr_data_passport FROM payment_system.users
-//INNER JOIN payment_system.role 
-//ON payment_system.users.role_idrole = payment_system.role.idrole;
-//SELECT payment_system.users.idusers, payment_system.users.login, payment_system.users.password, payment_system.users.name, payment_system.users.surname, payment_system.users.address, payment_system.role.title, payment_system.users.series_number_passport, payment_system.users.identification_number_passport, payment_system.users.codeword, payment_system.users.phone_number, payment_system.users.residence_registr_data_passport FROM payment_system.users INNER JOIN payment_system.role ON payment_system.users.role_idrole = payment_system.role.idrole;
-
-
-//SELECT payment_system.account.idaccount, 
-//payment_system.account.balance, 
-//payment_system.account.creation_date, payment_system.account.status, 
-//payment_system.currency.name_currency FROM payment_system.account 
-//INNER JOIN payment_system.currency ON payment_system.account.currency_idcurrency = payment_system.currency.idcurrency;
-//SELECT payment_system.account.idaccount, payment_system.account.balance, payment_system.account.creation_date, payment_system.account.status, payment_system.currency.name_currency FROM payment_system.account INNER JOIN payment_system.currency ON payment_system.account.currency_idcurrency = payment_system.currency.idcurrency;
-
-
-//SELECT payment_system.card.idcard, payment_system.card.creation_date, payment_system.card.status, payment_system.card.account_idaccount,
-//payment_system.payment_system_card.type_paym_syst_card, payment_system.name_card.name_card 
-//FROM payment_system.card 
-//INNER JOIN payment_system.payment_system_card ON payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card
-//INNER JOIN payment_system.name_card ON payment_system.card.name_card_idname_card = payment_system.name_card.idname_card;
-//SELECT payment_system.card.idcard, payment_system.card.creation_date, payment_system.card.status, payment_system.card.account_idaccount, payment_system.payment_system_card.type_paym_syst_card, payment_system.name_card.name_card FROM payment_system.card INNER JOIN payment_system.payment_system_card ON payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card INNER JOIN payment_system.name_card ON payment_system.card.name_card_idname_card = payment_system.name_card.idname_card;
-
-//SELECT payment_system.account.idaccount, payment_system.account.balance, payment_system.account.status, payment_system.account.creation_date, payment_system.currency.name_currency, payment_system.card.idcard, payment_system.payment_system_card.type_paym_syst_card, payment_system.name_card.name_card FROM payment_system.users_account INNER JOIN payment_system.account ON payment_system.users_account.account_idaccount = payment_system.account.idaccount INNER JOIN payment_system.currency ON payment_system.account.currency_idcurrency = payment_system.currency.idcurrency INNER JOIN payment_system.card ON  payment_system.account.idaccount = payment_system.card.account_idaccount INNER JOIN payment_system.payment_system_card ON payment_system.card.payment_system_card_idpayment_system_card = payment_system.payment_system_card.idpayment_system_card INNER JOIN payment_system.name_card ON  payment_system.card.name_card_idname_card = payment_system.name_card.idname_card WHERE payment_system.users_account.users_idusers = 2;
-
-
-
-
-
-
-
-
-//UPDATE payment_system.account
-//INNER JOIN payment_system.card
-//ON payment_system.account.idaccount = payment_system.card.account_idaccount
-//SET role_idrole = 6 WHERE idusers = 6
-
-//SELECT 
-//payment_system.account.idaccount,
-//payment_system.account.balance,
-//payment_system.account.status,
-//payment_system.card.account_idaccount,
-//payment_system.card.idcard,
-//payment_system.card.status
-//FROM payment_system.account
-//INNER JOIN payment_system.card ON 
-//payment_system.account.idaccount = payment_system.card.account_idaccount
-//WHERE payment_system.account.idaccount = 6;
-
