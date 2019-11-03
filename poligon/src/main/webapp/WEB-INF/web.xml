@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>web-proj-pay-syst</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Controller</display-name>
+    <servlet-name>Controller</servlet-name>
+    <servlet-class>by.htp.pay_syst.controller.Controller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/controller</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>xxx</servlet-name>
+    <jsp-file>/WEB-INF/jsp/accountRefill_user.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>xxx</servlet-name>
+    <url-pattern>/refill</url-pattern>
+  </servlet-mapping>
+  
+
+  <servlet>
+    <servlet-name>yyy</servlet-name>
+    <jsp-file>/WEB-INF/jsp/registration_user.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>yyy</servlet-name>
+    <url-pattern>/registration_user</url-pattern>
+  </servlet-mapping> 
+  
+  
+  <servlet>
+    <servlet-name>zzz</servlet-name>
+    <jsp-file>/WEB-INF/jsp/registration_admin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>zzz</servlet-name>
+    <url-pattern>/registration_admin</url-pattern>
+  </servlet-mapping> 
+  
+  
+    <servlet>
+    <servlet-name>qqq</servlet-name>
+    <jsp-file>/WEB-INF/jsp/to_lock_account.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>qqq</servlet-name>
+    <url-pattern>/to_lock_account</url-pattern>
+  </servlet-mapping> 
+  
+  
+    <servlet>
+    <servlet-name>www</servlet-name>
+    <jsp-file>/WEB-INF/jsp/delete_user.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>www</servlet-name>
+    <url-pattern>/delete_user</url-pattern>
+  </servlet-mapping> 
+  
+  
+   <servlet>
+    <servlet-name>eee</servlet-name>
+    <jsp-file>/WEB-INF/jsp/to_unlock_account.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>eee</servlet-name>
+    <url-pattern>/to_unlock_account</url-pattern>
+  </servlet-mapping> 
+  
+  
+  
+  <servlet>
+    <servlet-name>rrr</servlet-name>
+    <jsp-file>/WEB-INF/jsp/payment_user.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>rrr</servlet-name>
+    <url-pattern>/payment_user</url-pattern>
+  </servlet-mapping> 
+  
+  
+  <servlet>
+    <servlet-name>ttt</servlet-name>
+    <jsp-file>/WEB-INF/jsp/add_card.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ttt</servlet-name>
+    <url-pattern>/add_card</url-pattern>
+  </servlet-mapping> 
+  
+  
+   <servlet>
+    <servlet-name>uuu</servlet-name>
+    <jsp-file>/WEB-INF/jsp/correct_data.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>uuu</servlet-name>
+    <url-pattern>/correct_data</url-pattern>
+  </servlet-mapping> 
+  
+    
+  <listener>
+	  <listener-class>
+	 	 by.htp.pay_syst.controller.ProjectRequestListner
+	  </listener-class>
+  </listener>
+  
+  
+</web-app>
