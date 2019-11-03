@@ -20,7 +20,9 @@ public class Localization implements Command{
 //		adminPage
 //		forgetPasswPage
 //		registrPage
-		
+//		if(true) {
+//			throw new RuntimeException();
+//		}
 		
 		HttpSession session = request.getSession(true);
 		String languageName;
@@ -34,54 +36,28 @@ public class Localization implements Command{
 		
 		if (pageName.equals("indexPage")) {
 			
-			response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_MAIN_LOC");
+			response.sendRedirect("controller?command=GO_TO_MAIN_LOC");
 
 		}
 		if (pageName.equals("userPage")) {
 			
-			response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_MAIN_ACCOUNT");
+			response.sendRedirect("controller?command=GO_TO_MAIN_ACCOUNT");
 
 		}
 		if (pageName.equals("adminPage")) {
 			
-			response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_ADMIN_MAIN_ACCOUNT");
+			response.sendRedirect("controller?command=GO_TO_ADMIN_MAIN_ACCOUNT");
 
 		}
 		if (pageName.equals("forgetPasswPage")) {
 			
-			response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_FORGET_PASSWORD");
+			response.sendRedirect("controller?command=GO_TO_FORGET_PASSWORD");
 			
 		}
 		if (pageName.equals("registrPage")) {
 			
-			response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_REGISTRATION");
+			response.sendRedirect("controller?command=GO_TO_REGISTRATION");
 			
 		}
-
-		
-		
-		
-		
-//			if(localizationName.equals(respLocalization)){
-//				
-////				request.setAttribute("local", "en");
-////				RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.START_PAGE_INDEX);
-////				dispatcher.forward(request, response);
-//				
-//				session.setAttribute("local", "en");
-//				response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_MAIN_ACCOUNT");
-////				http://localhost:8080/Poligon/controller
-//			}else {
-////				request.setAttribute("local", "ru");
-////				RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.START_PAGE_INDEX);
-////				dispatcher.forward(request, response);
-//				
-//				session.setAttribute("local", "ru");
-//				response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_MAIN_ACCOUNT");
-//				
-//			}
-
-		
 	}
-
 }

@@ -24,57 +24,19 @@ public class CorrectionResidenceRegistration implements Command {
 		
 		Service servProvider = ServiceProvider.getInstance().getSelectService();
 		HttpSession session = request.getSession();
-		
-		if (session != null) {
-	    	
-		      if (session.getAttribute("correctionPhoneNumber") != null) {
-		        session.removeAttribute("correctionPhoneNumber");
-		      }
+
+		session.removeAttribute("correctionPhoneNumber");
+		session.removeAttribute("correctionPassword");
+		session.removeAttribute("correctionName");
+		session.removeAttribute("correctionLogin");
+		session.removeAttribute("correctionCodeWord");
+		session.removeAttribute("correctionAddress");
+		session.removeAttribute("addCard");
+		session.removeAttribute("correctionSurname");
+		session.removeAttribute("getAccountsAndCards");
+		session.removeAttribute("payment");
+		session.removeAttribute("transferBetweenUsersCards");
 		      
-		      if (session.getAttribute("correctionPassword") != null) {
-			        session.removeAttribute("correctionPassword");
-			      }
-			      
-		      if (session.getAttribute("correctionName") != null) {
-			        session.removeAttribute("correctionName");
-			      }
-			      
-		      if (session.getAttribute("correctionLogin") != null) {
-			        session.removeAttribute("correctionLogin");
-			      }
-			      
-		      if (session.getAttribute("correctionCodeWord") != null) {
-			        session.removeAttribute("correctionCodeWord");
-			      }
-			      
-		      if (session.getAttribute("correctionAddress") != null) {
-			        session.removeAttribute("correctionAddress");
-			      }
-			      
-		      if (session.getAttribute("addCard") != null) {
-			        session.removeAttribute("addCard");
-			      }
-			      
-		      if (session.getAttribute("correctionSurname") != null) {
-			        session.removeAttribute("correctionSurname");
-			      }
-		      
-		      if (session.getAttribute("getAccountsAndCards") != null) {
-			        session.removeAttribute("getAccountsAndCards");
-			      }
-		      
-		      if (session.getAttribute("payment") != null) {
-			        session.removeAttribute("payment");
-			      }
-		      
-		      if (session.getAttribute("transferBetweenUsersCards") != null) {
-			        session.removeAttribute("transferBetweenUsersCards");
-			      }
-		      
-		      
-			}
-		
-		
 		User user;
 		String resp;
 		String newResidenceRegistr;
@@ -87,16 +49,8 @@ public class CorrectionResidenceRegistration implements Command {
 		try{
 			resp = servProvider.correctionResidenceRegistr(newResidenceRegistr, idUser);
 			session.setAttribute("correctionResidenceRegistr", resp);
-			response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_CORRECT_DATA");
-			
-			
-//			request.setAttribute("resp2", resp);			
-//			RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.ADMIN_GET_NAME_CARDS);
-//			dispatcher.forward(request, response);
-			
-			
+			response.sendRedirect("controller?command=GO_TO_CORRECT_DATA");
 		}catch(ServiceException e){
-
 			logger.error("CorrectionResidenceRegistration exception from service =" + e);
 		}
 		
