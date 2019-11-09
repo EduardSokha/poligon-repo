@@ -20,17 +20,15 @@
 <body>
 
 	<form action="controller" method="post">
-			<input type="hidden" name="command" value="CORRECTION_PASSWORD"/>
-			<input type="password" id="oldPassw" name="oldPassword" value="" size="25" maxlength="25" required/> 
-			<label for="oldPassw">Old password</label><br>
-			<input type="password" id="newPassw1" name="newPassword1" value="" size="25" maxlength="25" required/> 
-			<label for="newPassw1">New password</label><br>
-			<input type="password" id="newPassw2" name="newPassword2" value="" size="25" maxlength="25" required/>
-			<label for="newPassw2">Repeat new password</label><br>
-			<input type="submit" value="Save new password"/>
+		<input type="hidden" name="command" value="CORRECTION_PASSWORD"/>
+		<input type="password" id="oldPassw" name="oldPassword" value="" size="25" maxlength="25" required/> 
+		<label for="oldPassw">Old password</label><br>
+		<input type="password" id="newPassw1" name="newPassword1" value="" size="25" maxlength="25" required/> 
+		<label for="newPassw1">New password</label><br>
+		<input type="password" id="newPassw2" name="newPassword2" value="" size="25" maxlength="25" required/>
+		<label for="newPassw2">Repeat new password</label><br>
+		<input type="submit" value="Save new password"/>
 	</form>
-	
-	<!--<c:out value="${requestScope.resp}"/>-->
 	
 	<c:out value="${sessionScope.correctionPassword}"/>
 	<c:out value="${requestScope.mistake}"/>

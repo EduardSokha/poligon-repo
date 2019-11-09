@@ -13,7 +13,7 @@ public class ConnectionPool {
 	private static final ConnectionPool instance = new ConnectionPool();
 
 	private BasicDataSource dataSource;
-	
+
 	final static Logger logger = Logger.getLogger(ConnectionPool.class);
 
 	public ConnectionPool() {
@@ -34,13 +34,13 @@ public class ConnectionPool {
 		releaseStatement(statement);
 		releaseConnection(con);
 	}
-	
+
 	public void releaseDbResourses(Connection con, Statement statement, ResultSet resultSet) {
 		releaseResultSet(resultSet);
 		releaseStatement(statement);
 		releaseConnection(con);
 	}
-	
+
 	public void releaseConnection(Connection con) {
 		try {
 			if (con != null) {
@@ -51,7 +51,7 @@ public class ConnectionPool {
 			logger.error("Cannot close connection", e);
 		}
 	}
-	
+
 	public void releaseStatement(Statement statement) {
 		if (statement != null) {
 			try {
@@ -61,7 +61,7 @@ public class ConnectionPool {
 			}
 		}
 	}
-	
+
 	public void releaseResultSet(ResultSet resultSet) {
 		if (resultSet != null) {
 			try {

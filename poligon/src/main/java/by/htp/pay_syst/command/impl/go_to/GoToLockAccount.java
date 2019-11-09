@@ -10,15 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import by.htp.pay_syst.command.Command;
 import by.htp.pay_syst.controller.JSPPageName;
 
-public class GoToLockAccount implements Command{
+public class GoToLockAccount implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_LOCK_ACCOUNT);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_LOCK_ACCOUNT);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

@@ -14,10 +14,10 @@ public class GoToTransferBetweenCards implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_TRANSFER_BETWEEN_CARDS);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_TRANSFER_BETWEEN_CARDS);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

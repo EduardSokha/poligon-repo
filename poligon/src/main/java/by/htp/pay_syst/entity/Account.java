@@ -1,18 +1,22 @@
 package by.htp.pay_syst.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Account {
+public class Account implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Date d = new Date();
 	private final String date = d.toString();
-	
 	private int idAccount;
 	private int balance;
 	private String creationDate;
 	private String status;
 	private String currency;
-	
-	public Account() {}
+
+	public Account() {
+	}
 
 	public Date getD() {
 		return d;
@@ -127,9 +131,4 @@ public class Account {
 				+ ", creationDate=" + creationDate + ", status=" + status + ", currency=" + currency + "]";
 	}
 
-		
-	
-	
-	
-	
 }

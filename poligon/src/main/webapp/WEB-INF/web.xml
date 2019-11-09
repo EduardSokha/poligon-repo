@@ -26,6 +26,17 @@
     <url-pattern>/controller</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <description></description>
+    <display-name>NewController</display-name>
+    <servlet-name>NewController</servlet-name>
+    <servlet-class>by.htp.pay_syst.controller.NewController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewController</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
     <servlet>
     <servlet-name>xxx</servlet-name>
     <jsp-file>/WEB-INF/jsp/accountRefill_user.jsp</jsp-file>

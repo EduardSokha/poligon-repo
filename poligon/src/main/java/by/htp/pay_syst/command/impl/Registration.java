@@ -16,18 +16,19 @@ import by.htp.pay_syst.service.Service;
 import by.htp.pay_syst.service.ServiceException;
 import by.htp.pay_syst.service.ServiceProvider;
 
-public class Registration implements Command{
+public class Registration implements Command {
 
 	final static Logger logger = Logger.getLogger(Registration.class);
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
+
 		Service servProvider = ServiceProvider.getInstance().getSelectService();
 		HttpSession session = request.getSession(true);
 		RegistrationInfo reg = new RegistrationInfo();
-		
+
 		String resp;
-		
+
 		reg.setLogin(request.getParameter(RequestParameterName.REQ_PARAM_REG_LOG));
 		reg.setPassword(request.getParameter(RequestParameterName.REQ_PARAM_REG_PASS));
 		reg.setName(request.getParameter(RequestParameterName.REQ_PARAM_REG_NAME));
@@ -38,35 +39,22 @@ public class Registration implements Command{
 		reg.setCodeWord(request.getParameter(RequestParameterName.REQ_PARAM_CODE_WORD));
 		reg.setPhoneNumber(request.getParameter(RequestParameterName.REQ_PARAM_PHONE_NUMBER));
 		reg.setResidenceRegistr(request.getParameter(RequestParameterName.REQ_PARAM_RESIDENCE_REGISTR));
-		
-		
+
 		resp = "error, try again";
 
 		try {
-			 if(servProvider.registrationUser(reg)) {
-				 resp = "successfully registration";
+			if (servProvider.registrationUser(reg)) {
+				resp = "successfully registration";
 			}
-			 
-			
-//			request.setAttribute("resp", resp);
-//			session.setAttribute("user", resp);
-			session.setAttribute("registrationUser", resp);
-			response.sendRedirect("http://localhost:8080/Poligon/controller?command=GO_TO_REGISTRATION");
-		
-		
-//		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.USER_REGISTR_PAGE);
-//		dispatcher.forward(request, response);
-			
-		} catch (ServiceException e) {
 
+			session.setAttribute("registrationUser", resp);
+			response.sendRedirect("controller?command=GO_TO_REGISTRATION");
+
+		} catch (ServiceException e) {
 			logger.error("Registration exception from service =" + e);
-			
+
 		}
-		
-		
-		
-		
-		
+
 	}
 
 }

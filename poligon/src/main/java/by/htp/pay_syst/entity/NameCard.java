@@ -1,11 +1,16 @@
 package by.htp.pay_syst.entity;
 
-public class NameCard {
+import java.io.Serializable;
+
+public class NameCard implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private int idNameCard;
 	private String nameCard;
-	
-	public NameCard() {}
+
+	public NameCard() {
+	}
 
 	public int getIdNameCard() {
 		return idNameCard;
@@ -55,8 +60,5 @@ public class NameCard {
 	public String toString() {
 		return "NameCard [idNameCard=" + idNameCard + ", nameCard=" + nameCard + "]";
 	}
-	
-	
-	
 
 }

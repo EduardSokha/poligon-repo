@@ -19,7 +19,8 @@
 <!-- ----------------------------------------------------- -->
 
 <body>
-	<p>Transfer</p>
+
+	<p>Transfer between cards</p>
 	
 	<form action="controller" method="post">
 			<input type="hidden" name="command" value="TRANSFER_BETWEEN_USERS_CARDS" />

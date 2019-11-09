@@ -33,6 +33,7 @@ import by.htp.pay_syst.command.impl.Registration;
 import by.htp.pay_syst.command.impl.RegistrationAdmin;
 import by.htp.pay_syst.command.impl.TransferBetweenUserCards;
 import by.htp.pay_syst.command.impl.UnlockAccount;
+import by.htp.pay_syst.command.impl.go_to.GoToAddCardUser;
 import by.htp.pay_syst.command.impl.go_to.GoToAdminCorrectionDataUser;
 import by.htp.pay_syst.command.impl.go_to.GoToAdminMainAccount;
 import by.htp.pay_syst.command.impl.go_to.GoToCorrectData;
@@ -51,14 +52,12 @@ import by.htp.pay_syst.command.impl.go_to.GoToTransferBetweenCards;
 import by.htp.pay_syst.command.impl.go_to.GoToUnlockAccount;
 
 public class CommandProvider {
-	
 
 	private static final CommandProvider instance = new CommandProvider();
 	private Map<CommandName, Command> commands = new HashMap<CommandName, Command>();
-	
-	
+
 	public CommandProvider() {
-		
+
 		commands.put(CommandName.AUTHORIZATION, new AuthorizationCommand());
 		commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
 		commands.put(CommandName.ACCOUNT_REFILL, new AccountRefill());
@@ -69,10 +68,10 @@ public class CommandProvider {
 		commands.put(CommandName.REGISTRATION_ADMIN, new RegistrationAdmin());
 		commands.put(CommandName.LOCK_ACCOUNT, new LockAccount());
 		commands.put(CommandName.UNLOCK_ACCOUNT, new UnlockAccount());
-//		commands.put(CommandName.CORRECTION_DATA, new CorrectionData());//------		
+		// commands.put(CommandName.CORRECTION_DATA, new
+		// CorrectionData());//------
 		commands.put(CommandName.GET_ACCOUNTS_CARDS, new GetAccountsAndCards());
-		
-		
+
 		commands.put(CommandName.CORRECTION_LOGIN, new CorrectionLogin());
 		commands.put(CommandName.CORRECTION_PASSWORD, new CorrectionPassword());
 		commands.put(CommandName.CORRECTION_NAME, new CorrectionName());
@@ -83,7 +82,7 @@ public class CommandProvider {
 		commands.put(CommandName.CORRECTION_RESIDENCE_REGISTRATION, new CorrectionResidenceRegistration());
 		commands.put(CommandName.FORGET_PASSWORD, new ForgetPassword());
 		commands.put(CommandName.TRANSFER_BETWEEN_USERS_CARDS, new TransferBetweenUserCards());
-		
+
 		commands.put(CommandName.CORRECT_SERIES_NUMB_PASSPORT, new CorrectSeriesNumbPassport());
 		commands.put(CommandName.CORRECT_IDENTIFIC_NUMB_PASSPORT, new CorrectIdentificNumberPassport());
 		commands.put(CommandName.GET_ACCOUNTS, new GetAllAccounts());
@@ -92,13 +91,13 @@ public class CommandProvider {
 		commands.put(CommandName.ADD_NEW_NAME_CARD, new AddNewNameCard());
 		commands.put(CommandName.DELETE_NAME_CARD, new DeleteNameCard());
 		commands.put(CommandName.GET_ALL_NAME_CARD, new GetAllNameCard());
-		
+
 		commands.put(CommandName.GO_TO_CORRECT_DATA, new GoToCorrectData());
 		commands.put(CommandName.GO_TO_LOCK_ACCOUNT, new GoToLockAccount());
 		commands.put(CommandName.GO_TO_MAIN, new GoToMain());
 		commands.put(CommandName.GO_TO_MAIN_LOC, new GoToMainLoc());
 		commands.put(CommandName.GO_TO_MAIN_ACCOUNT, new GoToMainAccount());
-		commands.put(CommandName.GO_TO_PAGE_ADD_CARD, new GoToPageAddCard());
+		// commands.put(CommandName.GO_TO_PAGE_ADD_CARD, new GoToPageAddCard());
 		commands.put(CommandName.GO_TO_PAYMENT, new GoToPayment());
 		commands.put(CommandName.GO_TO_REFILL, new GoToRefill());
 		commands.put(CommandName.GO_TO_REGISTRATION, new GoToRegistration());
@@ -109,34 +108,27 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_FORGET_PASSWORD, new GoToForgetPassword());
 		commands.put(CommandName.GO_TO_TRANSFER_BETWEEN_CARDS, new GoToTransferBetweenCards());
 		commands.put(CommandName.GO_TO_ADMIN_MAIN_ACCOUNT, new GoToAdminMainAccount());
+		commands.put(CommandName.GO_TO_ADD_CARD_USER, new GoToAddCardUser());
 		commands.put(CommandName.LOCALIZATION, new Localization());
-		
-		
-				
+
 	}
-	
-	
-	
+
 	public static CommandProvider getInstance() {
 		return instance;
 	}
 
-
-
 	public Command getCommand(String commandName) {
-//		System.out.println("provider commandName = " + commandName);
+
 		CommandName name = CommandName.valueOf(commandName.toUpperCase());
-//		System.out.println("provider name = " + name);
 		Command command;
-		if(null!=name){
+
+		if (null != name) {
 			command = commands.get(name);
-		}else{
+		} else {
 			command = commands.get(CommandName.NO_SUCH_COMMAND);
 		}
-		
 		return command;
+
 	}
-	
-	
-	
+
 }

@@ -20,30 +20,24 @@ import by.htp.pay_syst.service.ServiceProvider;
 public class GetAllAccounts implements Command {
 
 	final static Logger logger = Logger.getLogger(GetAllAccounts.class);
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
+
 		Service servProvider = ServiceProvider.getInstance().getSelectService();
 		List<Account> resp;
-		
-		
-		
-		
-		try{
-			
+
+		try {
 			resp = servProvider.getAccounts();
 			request.setAttribute("getAccounts", resp);
-			
-			RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.ADMIN_LIST_ALL_ACCOUNTS);
-			dispatcher.forward(request, response);
-			
-		}catch(ServiceException e){
 
+			RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ADMIN_LIST_ALL_ACCOUNTS);
+			dispatcher.forward(request, response);
+
+		} catch (ServiceException e) {
 			logger.error("GetAllAccounts exception from service =" + e);
 		}
-		
-		
-		
+
 	}
 
 }

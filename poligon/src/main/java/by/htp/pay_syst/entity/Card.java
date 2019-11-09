@@ -1,6 +1,10 @@
 package by.htp.pay_syst.entity;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private int idCard;
 	private String creationDate;
@@ -8,70 +12,57 @@ public class Card {
 	private int idAccount;
 	private String typePaymSystCard;
 	private String nameCard;
-	
-	
-	public Card(){}
 
+	public Card() {
+	}
 
 	public int getIdCard() {
 		return idCard;
 	}
 
-
 	public void setIdCard(int idCard) {
 		this.idCard = idCard;
 	}
-
 
 	public String getCreationDate() {
 		return creationDate;
 	}
 
-
 	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	public int getIdAccount() {
 		return idAccount;
 	}
 
-
 	public void setIdAccount(int idAccount) {
 		this.idAccount = idAccount;
 	}
-
 
 	public String getTypePaymSystCard() {
 		return typePaymSystCard;
 	}
 
-
 	public void setTypePaymSystCard(String typePaymSystCard) {
 		this.typePaymSystCard = typePaymSystCard;
 	}
-
 
 	public String getNameCard() {
 		return nameCard;
 	}
 
-
 	public void setNameCard(String nameCard) {
 		this.nameCard = nameCard;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -85,7 +76,6 @@ public class Card {
 		result = prime * result + ((typePaymSystCard == null) ? 0 : typePaymSystCard.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -123,16 +113,10 @@ public class Card {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Card [idCard=" + idCard + ", creationDate=" + creationDate + ", status=" + status + ", idAccount="
 				+ idAccount + ", typePaymSystCard=" + typePaymSystCard + ", nameCard=" + nameCard + "]";
 	}
-	
-	
-	
-	
-	
 
 }

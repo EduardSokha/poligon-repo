@@ -28,11 +28,11 @@
 <!------------------------------------------------------------------ -->
 
 
-<style type="text/css">
-input {
-width: 150px;
-}
-</style>
+	<style type="text/css">
+		input {
+		width: 150px;
+		}
+	</style>
 
 </head>
 
@@ -41,16 +41,6 @@ width: 150px;
 <body>
 
 <!-- ----------------------------------------------------------------- -->
-
-<!--<form action="controller" method="post">
-
-<select name="command" value="localization" id="listt">
-                    <option name="local" value="ru">"${ru_button}"</option>
-                    <option name="local" value="en" selected>"${en_button}"</option>
-                </select>
-                <input type="hidden" name="page" value="indexPage" /> 
-</form>   --> 
-                
 
 <form action="controller" method="post">
 
@@ -85,30 +75,20 @@ width: 150px;
 		<input type="submit" value="${sign_in}" /><br>
 	</form>
 	
-	<h1><%= request.getAttribute("noSuchUser")%></h1>
 	<h1><%= request.getAttribute("user")%></h1>
-	<a href="registration_user">Registration</a>
 	
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="GO_TO_REGISTRATION" /> 		
 		<input type="submit" value="${registration}" /><br>
 	</form>
-	
 	<br>
+	
 	<c:out value="${sessionScope.user}"/>
-	
-	<!-- <c:if test="${requestScope.resp eq 'Your account was not found. You need to register.' }" >
-
-	<c:out value="Your account was not found. You need to register."/>
-
-	</c:if>-->
-	
 	
 	<form action="controller" method="get">
 		<input type="hidden" name="command" value="GO_TO_FORGET_PASSWORD" /> 		
 		<input type="submit" value="${forget_password}" /><br>
 	</form>
-
 
 </body>
 </html>

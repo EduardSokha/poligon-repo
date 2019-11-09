@@ -8,7 +8,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -22,31 +21,23 @@ import by.htp.pay_syst.service.ServiceProvider;
 public class GetAllNameCard implements Command {
 
 	final static Logger logger = Logger.getLogger(GetAllNameCard.class);
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		
+
 		Service servProvider = ServiceProvider.getInstance().getSelectService();
 		List<NameCard> resp = new ArrayList<NameCard>();
-		
-		try{
+
+		try {
 			resp = servProvider.getAllNameCard();
 			request.setAttribute("getAllNameCard", resp);
-			
-			
-			RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.ADMIN_GET_NAME_CARDS);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ADMIN_GET_NAME_CARDS);
 			dispatcher.forward(request, response);
-			
-			
-		}catch(ServiceException e){
 
+		} catch (ServiceException e) {
 			logger.error("GetAllNameCard exception from service =" + e);
 		}
-		
-//		for (NameCard b : resp) {
-//			System.out.println(b);
-//		}
-		
+
 	}
 
 }

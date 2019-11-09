@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import by.htp.pay_syst.command.Command;
 import by.htp.pay_syst.controller.JSPPageName;
 
-public class GoToAdminCorrectionDataUser implements Command{
+public class GoToAdminCorrectionDataUser implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_ADMIN_CORRECTION_DATA);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_ADMIN_CORRECTION_DATA);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

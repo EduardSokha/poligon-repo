@@ -1,109 +1,93 @@
 package by.htp.pay_syst.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AddCardParameters {
+public class AddCardParameters implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String login;
 	private String password;
-	private int idUser; 
+	private int idUser;
 	private Date date = new Date();
 	private final String creationDate = date.toString();
 	private final int balance = 0;
 	private final String status = "unlocked";
 	private int currency;
-	
 	private int paySystCard;
 	private int nameCard;
-	
-	
-	public AddCardParameters() {}
 
+	public AddCardParameters() {
+	}
 
 	public String getLogin() {
 		return login;
 	}
 
-
 	public void setLogin(String login) {
 		this.login = login;
 	}
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public int getIdUser() {
 		return idUser;
 	}
 
-
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
-
 
 	public Date getDate() {
 		return date;
 	}
 
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
 
 	public int getCurrency() {
 		return currency;
 	}
 
-
 	public void setCurrency(int currency) {
 		this.currency = currency;
 	}
-
 
 	public int getPaySystCard() {
 		return paySystCard;
 	}
 
-
 	public void setPaySystCard(int paySystCard) {
 		this.paySystCard = paySystCard;
 	}
-
 
 	public int getNameCard() {
 		return nameCard;
 	}
 
-
 	public void setNameCard(int nameCard) {
 		this.nameCard = nameCard;
 	}
-
 
 	public String getCreationDate() {
 		return creationDate;
 	}
 
-
 	public int getBalance() {
 		return balance;
 	}
 
-
 	public String getStatus() {
 		return status;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -121,7 +105,6 @@ public class AddCardParameters {
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -170,20 +153,11 @@ public class AddCardParameters {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "AddCardParameters [login=" + login + ", password=" + password + ", idUser=" + idUser + ", date=" + date
 				+ ", creationDate=" + creationDate + ", balance=" + balance + ", status=" + status + ", currency="
 				+ currency + ", paySystCard=" + paySystCard + ", nameCard=" + nameCard + "]";
 	}
-
-	
-	
-	
-	
-
-	
-	
 
 }

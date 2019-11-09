@@ -1,6 +1,7 @@
 package by.htp.pay_syst.command;
 
 public enum CommandName {
+	
 	AUTHORIZATION, 
 	NO_SUCH_COMMAND, 
 	ACCOUNT_REFILL, 
@@ -42,7 +43,7 @@ public enum CommandName {
 	GO_TO_MAIN,
 	GO_TO_MAIN_LOC,
 	GO_TO_MAIN_ACCOUNT,
-	GO_TO_PAGE_ADD_CARD,
+//	GO_TO_PAGE_ADD_CARD,
 	GO_TO_PAYMENT,
 	GO_TO_REFILL,
 	GO_TO_REGISTRATION,
@@ -53,10 +54,24 @@ public enum CommandName {
 	GO_TO_FORGET_PASSWORD,
 	GO_TO_TRANSFER_BETWEEN_CARDS,
 	GO_TO_ADMIN_MAIN_ACCOUNT,
+	GO_TO_ADD_CARD_USER;
 	
-	
-
-	
-	
-	
+//	private String commandUrl;
+//
+//	private CommandName() {
+//	}
+//
+//	private CommandName(String commandUrl) {
+//		this.commandUrl = commandUrl;
+//	}
+//
+//	public static CommandName getCommandNameByUrl(String url) {
+//		for (CommandName commandName : values()) {
+//			if (url.equals(commandName.commandUrl)) {
+//				return commandName;
+//			}
+//		}
+//		
+//		return NO_SUCH_COMMAND;
+//	}
 }

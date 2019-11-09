@@ -30,8 +30,6 @@
 	<fmt:message bundle="${loc}" key="local.locbutton.send" var="send"/>
 	<fmt:message bundle="${loc}" key="local.locbutton.back" var="back"/>
 
-
-
 	<style type="text/css">
 		input {
 		width: 200px;
@@ -43,36 +41,29 @@
 <!-- ----------------------------------------------------- -->
 
 <body>
-<h1>Hello visitor</h1>
 
+	<h1>Hello visitor</h1>
 
 	<form action="controller" method="post">
-	
-	<input type="hidden" name="command" value="localization" /> 
-	<input type="hidden" name="local" value="ru" />
-	<input type="hidden" name="page" value="registrPage" />  
-	<input type="submit" value="${ru_button}" /><br>
-	
+		<input type="hidden" name="command" value="localization" /> 
+		<input type="hidden" name="local" value="ru" />
+		<input type="hidden" name="page" value="registrPage" />  
+		<input type="submit" value="${ru_button}" /><br>
 	</form>
 	
 	<form action="controller" method="post">
-	
-	<input type="hidden" name="command" value="localization" /> 
-	<input type="hidden" name="local" value="en" /> 
-	<input type="hidden" name="page" value="registrPage" />   
-	<input type="submit" value="${en_button}" /><br>
-	
+		<input type="hidden" name="command" value="localization" /> 
+		<input type="hidden" name="local" value="en" /> 
+		<input type="hidden" name="page" value="registrPage" />   
+		<input type="submit" value="${en_button}" /><br>
 	</form>
 	
 	<c:out value="${message}"/>
 
-
 <!-- ----------------------------------------------------- -->
-
 
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="registration"/> 
-		
 		<input type="text" id="log" name="login" value="Nilik" size="25" maxlength="25" required/>
 		<label for="log">${login}</label><br>
 		<input type="password" id="passw"  name="pass" value="" size="25" maxlength="25" required/> 
@@ -93,12 +84,9 @@
 		<label for="phoneNumb">${phone_number}</label><br>
 		<input type="text" id="residenceRegistration" name="residenceRegistr" value="Dolgobrodskaya 2, flat 20" size="25" maxlength="25" required/>
 		<label for="residenceRegistration">${residence_registr}</label><br>
-		
 		<input type="submit" value="${send}"/><br />
 	</form>
-
-	<!--  <h1><%=request.getAttribute("registrationUser")%></h1>
-	<h1><%=session.getAttribute("registrationUser")%></h1>-->
+	
 	<c:out value="${sessionScope.registrationUser}"/>
 	
 	<form action="controller" method="get">

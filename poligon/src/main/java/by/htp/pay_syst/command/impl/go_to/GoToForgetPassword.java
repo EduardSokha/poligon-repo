@@ -14,12 +14,10 @@ public class GoToForgetPassword implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_FORGET_PASSWORD);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_FORGET_PASSWORD);
 		dispatcher.forward(request, response);
-		
-		
+
 	}
 
 }

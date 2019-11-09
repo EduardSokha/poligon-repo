@@ -1,7 +1,11 @@
 package by.htp.pay_syst.entity;
 
-public class User {
-	
+import java.io.Serializable;
+
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private int id;
 	private String login;
 	private String password;
@@ -15,191 +19,114 @@ public class User {
 	private String codeWord;
 	private String phoneNumber;
 	private String residenceRegistr;
-	
-	
-	private String Ex="tyr";
-
-	
 
 	public User() {
 
 	}
-	
-	
-	
-	
-	
-
-	public String getEx() {
-		return Ex;
-	}
-
-
-
-	public void setEx(String ex) {
-		Ex = ex;
-	}
-
-
-
-
-
 
 	public int getId() {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public String getLogin() {
 		return login;
 	}
 
-
-
 	public void setLogin(String login) {
 		this.login = login;
 	}
-
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
 
 	public String getName() {
 		return name;
 	}
 
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 	public String getSurname() {
 		return surname;
 	}
 
-
-
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
-
 
 	public String getAddress() {
 		return address;
 	}
 
-
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-
 
 	public int getRole() {
 		return role;
 	}
 
-
-
 	public void setRole(int role) {
 		this.role = role;
 	}
-
-
 
 	public String getSeriesNumberPassport() {
 		return seriesNumberPassport;
 	}
 
-
-
 	public void setSeriesNumberPassport(String seriesNumberPassport) {
 		this.seriesNumberPassport = seriesNumberPassport;
 	}
-
-
 
 	public String getIdentificNumberPassport() {
 		return identificNumberPassport;
 	}
 
-
-
 	public void setIdentificNumberPassport(String identificNumberPassport) {
 		this.identificNumberPassport = identificNumberPassport;
 	}
-
-
 
 	public String getCodeWord() {
 		return codeWord;
 	}
 
-
-
 	public void setCodeWord(String codeWord) {
 		this.codeWord = codeWord;
 	}
-
-
 
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-
-
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
-
 
 	public String getResidenceRegistr() {
 		return residenceRegistr;
 	}
 
-
-
 	public void setResidenceRegistr(String residenceRegistr) {
 		this.residenceRegistr = residenceRegistr;
 	}
-
-
 
 	public String getRoleStr() {
 		return roleStr;
 	}
 
-
-
 	public void setRoleStr(String roleStr) {
 		this.roleStr = roleStr;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -220,8 +147,6 @@ public class User {
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -294,8 +219,6 @@ public class User {
 		return true;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", password=" + password + ", name=" + name + ", surname="
@@ -304,10 +227,4 @@ public class User {
 				+ phoneNumber + ", residenceRegistr=" + residenceRegistr + ", roleStr=" + roleStr + "]";
 	}
 
-
-
-
-	
-	
-	
 }

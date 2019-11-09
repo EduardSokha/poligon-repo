@@ -14,10 +14,10 @@ public class GoToRegistration implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_REGISTRATION);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_REGISTRATION);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

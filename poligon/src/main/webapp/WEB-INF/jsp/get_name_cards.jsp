@@ -22,7 +22,6 @@
 
 <body>
 
-
 	<c:forEach var="name" items="${requestScope.getAllNameCard}">
 		<c:out value="${name.idNameCard}"/>
 		<c:out value="${name.nameCard}"/>
@@ -30,26 +29,23 @@
 	</c:forEach>
 	<br>
 	
-	
 	<form action="controller" method="post">
-			<input type="hidden" name="command" value="ADD_NEW_NAME_CARD"/>
-			<input type="text" id="addNewNameCard" name="newNameCard" value="" size="25" maxlength="25" required/> 		
-			<label for="addNewNameCard">Add new name card</label><br>
-			<input type="submit" value="Add" />
+		<input type="hidden" name="command" value="ADD_NEW_NAME_CARD"/>
+		<input type="text" id="addNewNameCard" name="newNameCard" value="" size="25" maxlength="25" required/> 		
+		<label for="addNewNameCard">Add new name card</label><br>
+		<input type="submit" value="Add" />
 	</form>
 	
-	<!--<c:out value="${requestScope.resp1}"/>-->
 	<c:out value="${sessionScope.addNewNameCard}"/>
 	<br>
 	
 	<form action="controller" method="post">
-			<input type="hidden" name="command" value="DELETE_NAME_CARD"/> 
-			<input type="text" id="deleteName" name="idNameCard" value="" size="25" maxlength="25" required/> 		
-			<label for="deleteName">Delete name card</label><br>
-			<input type="submit" value="Delete" />
+		<input type="hidden" name="command" value="DELETE_NAME_CARD"/> 
+		<input type="text" id="deleteName" name="idNameCard" value="" size="25" maxlength="25" required/> 		
+		<label for="deleteName">Delete name card</label><br>
+		<input type="submit" value="Delete" />
 	</form>
 	
-	<!--<c:out value="${requestScope.resp2}"/>-->
 	<c:out value="${sessionScope.deleteNameCard}"/>
 	
 	<form action="controller" method="get">

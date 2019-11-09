@@ -12,8 +12,7 @@ public class DeleteUser implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

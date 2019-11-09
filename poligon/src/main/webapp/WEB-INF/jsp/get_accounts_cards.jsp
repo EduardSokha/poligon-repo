@@ -20,6 +20,7 @@
 <!-- ----------------------------------------------------- -->
 
 <body>
+
 	<h1>Get accounts</h1>
 	
 	<c:forEach var="name" items="${requestScope.getAccountsAndCards}">
@@ -33,56 +34,6 @@
 		<c:out value="${name.nameCard}"/>
 		<br>
 	</c:forEach>
-	
-	
-	<!-- <form action="controller" method="post">
-			<input type="hidden" name="command" value="GET_ACCOUNTS_CARDS" /> 
-			<input type="submit" value="Sign in" /><br>
-	
-		</form>
-	
-	<%
-		//by.htp.pay_syst.entity.ListAccountsAndCards getAcc;
-		//getAcc = (by.htp.pay_syst.entity.ListAccountsAndCards)request.getAttribute("getAccountsAndCards");
-		//out.print(getAcc.getIdAccount());
-		//out.print(getAcc.getBalance());
-		//out.print(getAcc.getStatusAccount());
-		//out.print(getAcc.getCreationDateAccount());	
-		//out.print(getAcc.getCurrency());
-		//out.print(getAcc.getIdCard());
-		//out.print(getAcc.getTypePaySyst());
-		//out.print(getAcc.getNameCard());
-	%>
-	
-	
-	<br>
-	
-	
-	<%
-		
-		//getAcc = (by.htp.pay_syst.entity.ListAccountsAndCards)request.getAttribute("getAccountsAndCards");
-		//out.print(getAcc.getIdAccount());
-		//out.print(getAcc.getBalance());
-		//out.print(getAcc.getStatusAccount());
-		//out.print(getAcc.getCreationDateAccount());	
-		//out.print(getAcc.getCurrency());
-		//out.print(getAcc.getIdCard());
-		//out.print(getAcc.getTypePaySyst());
-		//out.print(getAcc.getNameCard());
-	%>
-	<br>
-	<%
-		
-		//getAcc = (by.htp.pay_syst.entity.ListAccountsAndCards)request.getAttribute("getAccountsAndCards");
-		//out.print(getAcc.getIdAccount());
-		//out.print(getAcc.getBalance());
-		//out.print(getAcc.getStatusAccount());
-		//out.print(getAcc.getCreationDateAccount());	
-		//out.print(getAcc.getCurrency());
-		//out.print(getAcc.getIdCard());
-		//out.print(getAcc.getTypePaySyst());
-		//out.print(getAcc.getNameCard());
-	%>-->
 	
 	<form action="controller" method="get">
 		<input type="hidden" name="command" value="GO_TO_MAIN_ACCOUNT" /> 

@@ -14,10 +14,10 @@ public class GoToRegistrationAdmin implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_REGISTRATION_ADMIN);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_REGISTRATION_ADMIN);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

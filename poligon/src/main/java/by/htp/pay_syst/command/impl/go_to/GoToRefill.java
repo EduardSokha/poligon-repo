@@ -14,10 +14,10 @@ public class GoToRefill implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_REFILL);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_REFILL);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

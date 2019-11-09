@@ -1,16 +1,19 @@
 package by.htp.pay_syst.entity;
 
+import java.io.Serializable;
 
-
-public class PaymentParameters {
+public class PaymentParameters implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private int paymentAmount;
 	private int idAccount;
-	private int idUser; 
-	private int idAccountRecipient; 
+	private int idUser;
+	private int idAccountRecipient;
 	private String sender;
-	
-	public PaymentParameters(){}
+
+	public PaymentParameters() {
+	}
 
 	public int getPaymentAmount() {
 		return paymentAmount;
@@ -94,12 +97,5 @@ public class PaymentParameters {
 		return "PaymentParameters [paymentAmount=" + paymentAmount + ", idAccount=" + idAccount + ", idUser=" + idUser
 				+ ", idAccountRecipient=" + idAccountRecipient + ", sender=" + sender + "]";
 	}
-
-	
-
-	
-	
-	
-	
 
 }

@@ -20,64 +20,50 @@ import by.htp.pay_syst.service.Service;
 import by.htp.pay_syst.service.ServiceException;
 import by.htp.pay_syst.service.ServiceProvider;
 
-
-
 public class AuthorizationCommand implements Command {
 
 	final static Logger logger = Logger.getLogger(AuthorizationCommand.class);
+
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
 		Service servProvider = ServiceProvider.getInstance().getSelectService();
 		Map<Integer, RequestDispatcher> command = new HashMap<Integer, RequestDispatcher>();
-		
+
 		User user;
-		
+
 		String login;
 		String password;
-		
+
 		login = request.getParameter(RequestParameterName.REQ_PARAM_LOGIN);
 		password = request.getParameter(RequestParameterName.REQ_PARAM_PASS);
-		
-		try{
+
+		try {
 			user = servProvider.authorization(login, password);
-			
-			
-			if(user==null) {
-				
+
+			if (user == null) {
+
 				String resp = "Your account haven't found. You need to register.";
 				request.setAttribute("noSuchUser", resp);
-				RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.START_PAGE_INDEX);
+				RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.START_PAGE_INDEX);
 				dispatcher.forward(request, response);
-				
-			}else {
-				
+
+			} else {
+
 				HttpSession session = request.getSession(true);
-				
 				session.setAttribute("user", user);
-				
 				request.setAttribute("user", user);
 				command.put(1, request.getRequestDispatcher(JSPPageName.ADMIN_AUTH_PAGE));
 				command.put(2, request.getRequestDispatcher(JSPPageName.USER_AUTH_PAGE));
-				
+
 				RequestDispatcher dispatcher = command.get(user.getRole());
 				dispatcher.forward(request, response);
 			}
 
-		}catch(ServiceException e){
+		} catch (ServiceException e) {
 			logger.error("AuthorizationCommand exception from service =" + e);
-			//log
-			
 		}
-		
+
 	}
-	
-	
 
 }
-
-
-//System.out.println(request.getParameter("command"));
-//System.out.println(request.getParameter("login"));
-//System.out.println(request.getParameter("pass"));
-

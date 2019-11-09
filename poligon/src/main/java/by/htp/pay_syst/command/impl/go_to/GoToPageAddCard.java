@@ -14,10 +14,10 @@ public class GoToPageAddCard implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_PAGE_ADD_CARD);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_PAGE_ADD_CARD);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

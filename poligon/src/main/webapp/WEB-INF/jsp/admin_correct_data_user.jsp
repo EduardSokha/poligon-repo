@@ -15,42 +15,30 @@
 	</style>
 
 </head>
-
-
-
 <body>
 
 	<form action="controller" method="post">
 			<input type="hidden" name="command" value="CORRECT_SERIES_NUMB_PASSPORT" />
-			
 			<input id="newSerNumbPassp" type="text" id="seriesPassport" name="newSeriesNumbPassport" value="VV36985" size="25" maxlength="25" required/> 	
 			<label for="newSerNumbPassp">newSeriesNumbPassport</label><br>
 			<input id="idUser" type="text" id="idUser" name="idUser" value="" size="25" maxlength="25" required/> 
 			<label for="idUser">Id user</label><br>
-			
 			<input type="submit" value="Save"/>
 	</form>
 	
-	<!--<c:out value="${requestScope.resp}"/>-->
 	<c:out value="${sessionScope.correctionSeriesNumberPassport}"/>
 	<br>
 	
 	<form action="controller" method="post">
-			
-			<input type="hidden" name="command" value="CORRECT_IDENTIFIC_NUMB_PASSPORT" />
-			
-			<input type="text" id="newIdentNumbPassp" name="newIdentificNumbPassport" value="35923v36" size="25" maxlength="25" required/> 
-			<label for="newIdentNumbPassp">New identification number passport</label><br>
-			<input type="text" id="idUser" name="idUser" value="" size="25" maxlength="25" required/> 		
-			<label for="idUser">Id user</label><br>
-			<input type="submit" value="Save"/>
-	
+		<input type="hidden" name="command" value="CORRECT_IDENTIFIC_NUMB_PASSPORT" />
+		<input type="text" id="newIdentNumbPassp" name="newIdentificNumbPassport" value="35923v36" size="25" maxlength="25" required/> 
+		<label for="newIdentNumbPassp">New identification number passport</label><br>
+		<input type="text" id="idUser" name="idUser" value="" size="25" maxlength="25" required/> 		
+		<label for="idUser">Id user</label><br>
+		<input type="submit" value="Save"/>
 	</form>
 	
-	
-	<!--<c:out value="${requestScope.resp1}"/>-->
 	<c:out value="${sessionScope.correctIdentificNumbPassp}"/>
-	
 	
 	<form action="controller" method="get">	
 		<input type="hidden" name="command" value="GO_TO_ADMIN_MAIN_ACCOUNT" /> 

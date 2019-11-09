@@ -19,9 +19,10 @@ import by.htp.pay_syst.service.ServiceProvider;
 public class CorrectionResidenceRegistration implements Command {
 
 	final static Logger logger = Logger.getLogger(CorrectionResidenceRegistration.class);
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
+
 		Service servProvider = ServiceProvider.getInstance().getSelectService();
 		HttpSession session = request.getSession();
 
@@ -36,25 +37,25 @@ public class CorrectionResidenceRegistration implements Command {
 		session.removeAttribute("getAccountsAndCards");
 		session.removeAttribute("payment");
 		session.removeAttribute("transferBetweenUsersCards");
-		      
+
 		User user;
 		String resp;
 		String newResidenceRegistr;
 		int idUser;
-		
-		user = (User)session.getAttribute("user");
+
+		user = (User) session.getAttribute("user");
 		idUser = user.getId();
-		newResidenceRegistr = request.getParameter(RequestParameterName.REQ_PARAM_CORRECT_RESIDENCE_REGISTR); 
-		
-		try{
+		newResidenceRegistr = request.getParameter(RequestParameterName.REQ_PARAM_CORRECT_RESIDENCE_REGISTR);
+
+		try {
 			resp = servProvider.correctionResidenceRegistr(newResidenceRegistr, idUser);
 			session.setAttribute("correctionResidenceRegistr", resp);
 			response.sendRedirect("controller?command=GO_TO_CORRECT_DATA");
-		}catch(ServiceException e){
+
+		} catch (ServiceException e) {
 			logger.error("CorrectionResidenceRegistration exception from service =" + e);
 		}
-		
-		
+
 	}
 
 }

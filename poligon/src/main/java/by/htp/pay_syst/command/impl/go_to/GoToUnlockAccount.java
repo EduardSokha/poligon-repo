@@ -14,11 +14,10 @@ public class GoToUnlockAccount implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_UNLOCK_ACCOUNT);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_UNLOCK_ACCOUNT);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

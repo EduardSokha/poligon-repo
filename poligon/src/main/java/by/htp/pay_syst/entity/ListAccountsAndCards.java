@@ -1,101 +1,86 @@
 package by.htp.pay_syst.entity;
 
-public class ListAccountsAndCards {
-	private int idAccount; 
+import java.io.Serializable;
+
+public class ListAccountsAndCards implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	private int idAccount;
 	private int balance;
 	private String statusAccount;
 	private String creationDateAccount;
 	private String currency;
-	private int idCard; 
+	private int idCard;
 	private String typePaySyst;
 	private String nameCard;
-	
-	
-//	private String creationDateCard;
-//	private  String statusCard;
-	
-	public ListAccountsAndCards() {}
 
+	public ListAccountsAndCards() {
+	}
 
 	public int getIdAccount() {
 		return idAccount;
 	}
 
-
 	public void setIdAccount(int idAccount) {
 		this.idAccount = idAccount;
 	}
-
 
 	public int getBalance() {
 		return balance;
 	}
 
-
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
-
 
 	public String getStatusAccount() {
 		return statusAccount;
 	}
 
-
 	public void setStatusAccount(String statusAccount) {
 		this.statusAccount = statusAccount;
 	}
-
 
 	public String getCreationDateAccount() {
 		return creationDateAccount;
 	}
 
-
 	public void setCreationDateAccount(String creationDateAccount) {
 		this.creationDateAccount = creationDateAccount;
 	}
-
 
 	public String getCurrency() {
 		return currency;
 	}
 
-
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-
 
 	public int getIdCard() {
 		return idCard;
 	}
 
-
 	public void setIdCard(int idCard) {
 		this.idCard = idCard;
 	}
-
 
 	public String getTypePaySyst() {
 		return typePaySyst;
 	}
 
-
 	public void setTypePaySyst(String typePaySyst) {
 		this.typePaySyst = typePaySyst;
 	}
-
 
 	public String getNameCard() {
 		return nameCard;
 	}
 
-
 	public void setNameCard(String nameCard) {
 		this.nameCard = nameCard;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -111,7 +96,6 @@ public class ListAccountsAndCards {
 		result = prime * result + ((typePaySyst == null) ? 0 : typePaySyst.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -156,7 +140,6 @@ public class ListAccountsAndCards {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "ListAccountsAndCards [idAccount=" + idAccount + ", balance=" + balance + ", statusAccount="
@@ -164,10 +147,4 @@ public class ListAccountsAndCards {
 				+ ", idCard=" + idCard + ", typePaySyst=" + typePaySyst + ", nameCard=" + nameCard + "]";
 	}
 
-	
-	
-	
-	
-	
-	
 }

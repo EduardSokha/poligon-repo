@@ -14,9 +14,10 @@ public class GoToPayment implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		RequestDispatcher dispatcher= request.getRequestDispatcher(JSPPageName.GO_TO_PAYMENT);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.GO_TO_PAYMENT);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

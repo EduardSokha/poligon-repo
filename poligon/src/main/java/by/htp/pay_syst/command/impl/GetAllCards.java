@@ -20,28 +20,23 @@ import by.htp.pay_syst.service.ServiceProvider;
 public class GetAllCards implements Command {
 
 	final static Logger logger = Logger.getLogger(GetAllCards.class);
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
+
 		Service servProvider = ServiceProvider.getInstance().getSelectService();
 		List<Card> resp;
-		
-		
-		try{
+
+		try {
 			resp = servProvider.getCards();
 			request.setAttribute("getCards", resp);
-			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ADMIN_LIST_ALL_CARDS);
 			dispatcher.forward(request, response);
-			
-			
-		}catch(ServiceException e){
 
+		} catch (ServiceException e) {
 			logger.error("GetAllCards exception from service =" + e);
 		}
-		
-		
-		
+
 	}
 
 }

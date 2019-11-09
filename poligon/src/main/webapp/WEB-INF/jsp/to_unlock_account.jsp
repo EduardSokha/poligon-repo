@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -25,8 +25,6 @@
 		<input type="submit" value="Save" /><br>
 	</form>
 	
-	
-	<!-- <h1><%= request.getAttribute("toUnlockAccount")%></h1>-->
 	<c:out value="${sessionScope.toUnlockAccount}"/>
 	
 	<form action="controller" method="get">
@@ -36,7 +34,3 @@
 	
 </body>
 </html>
-
-<!-- <input type="text" name="name" value="Roma" /><br>-->
-		<!--  <input type="text" name="surname" value="Nilikovskiy" /><br>-->
-		

@@ -8,14 +8,11 @@
 </head>
 <body>
 
-<form action="controller" method="post">
-
+	<form action="controller" method="post">
 		<input type="hidden" name="command" value="delete_user" />
 		<input type="text" name="name" value="Roma" /><br>
 		<input type="text" name="surname" value="Nilikovskiy" /><br>
 		<input type="submit" value="Sign in" /><br />
-
-
 	</form>
 
 </body>

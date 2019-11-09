@@ -1,6 +1,10 @@
 package by.htp.pay_syst.entity;
 
-public class RegistrationInfo {
+import java.io.Serializable;
+
+public class RegistrationInfo implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String login;
 	private String password;
@@ -15,7 +19,7 @@ public class RegistrationInfo {
 	private String residenceRegistr;
 
 	public RegistrationInfo() {
-		
+
 	}
 
 	public String getLogin() {
@@ -191,13 +195,5 @@ public class RegistrationInfo {
 				+ ", identificNumberPassport=" + identificNumberPassport + ", codeWord=" + codeWord + ", phoneNumber="
 				+ phoneNumber + ", residenceRegistr=" + residenceRegistr + "]";
 	}
-
-	
-
-	
-
-	
-
-	
 
 }

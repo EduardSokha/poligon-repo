@@ -29,7 +29,6 @@
 		<br>
 	</c:forEach>
 	
-	
 	<form action="controller" method="get">
 		<input type="hidden" name="command" value="GO_TO_ADMIN_MAIN_ACCOUNT" /> 
 		<input type="submit" value="Back" /><br>
